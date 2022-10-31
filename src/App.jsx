@@ -1,34 +1,42 @@
-import { useState } from 'react';
 import './App.css';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { useEffect, useState } from 'react';
 
 function App() {
 
-  const [tarih, setTarih] = useState({
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
-    varDate: new Date()
 
-  });
+  useEffect(() => {
 
-  const handleDate = (e) => {
-    e.preventDefault()
-    // console.log(e.target[0].value);
+    console.log(selectedDate + " ------ " + typeof (selectedDate));
 
-    setTarih({
-      varDate: e.target[0].value
-    })
-    console.log(tarih);
-  }
+  }, [selectedDate])
 
   return (
     <div className='App'>
+      <div style={{ display: "flex", justifyContent: "center", marginTop: "1em", gap: "20px" }}>
 
-      {/* {tarih.getHours()} - {tarih.getMinutes()} - {tarih.getFullYear()} <br /> */}
-      <form onSubmit={(e) => handleDate(e)}>
-        <input style={{ marginTop: "2em" }} type="date" />
-        <button type='submit'>ekle</button>
-      </form>
+        <span>
+          <DatePicker
+            dateFormat={'dd/MM/yyyy'}
+            selected={selectedDate}
+            onChange={(date) => setSelectedDate(date)}
+            minDate={new Date()}
+          />
+        </span>
+        <br />
+        <select>
+          <option value="Cotton">Cotton</option>
+          <option value="Line">Line</option>
+        </select>
+        <input type="number" min={0} max={30} />
+        <button style={{position:"absolute", marginTop:"2em"}}>Calculate</button>
+      </div>
+      <h1>RESULT</h1>
+      {selectedDate.toDateString()}
 
-      
 
     </div>
   );
